@@ -1,0 +1,54 @@
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: Cluster
+metadata:
+  name: main-i-0c03d33a62de1300b
+  namespace: default
+spec:
+  clusterNetwork:
+    cniConfig:
+      cilium: {}
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+    services:
+      cidrBlocks:
+      - 10.96.0.0/12
+  controlPlaneConfiguration:
+    count: 1
+  datacenterRef:
+    kind: DockerDatacenterConfig
+    name: main-i-0c03d33a62de1300b
+  externalEtcdConfiguration:
+    count: 1
+  gitOpsRef:
+    kind: FluxConfig
+    name: eksa-test-cg9je
+  kubernetesVersion: "1.23"
+  managementCluster:
+    name: main-i-0c03d33a62de1300b
+  workerNodeGroupConfigurations:
+  - count: 1
+    name: md-0
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: DockerDatacenterConfig
+metadata:
+  name: main-i-0c03d33a62de1300b
+  namespace: default
+spec: {}
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: FluxConfig
+metadata:
+  name: eksa-test-cg9je
+  namespace: default
+spec:
+  branch: 5105050-0
+  clusterConfigPath: 5105050-0
+  git:
+    repositoryUrl: ssh://git@github.com/danbudris/5105050-0.git
+  systemNamespace: default
+
+---
